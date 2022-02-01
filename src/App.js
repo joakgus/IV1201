@@ -1,15 +1,20 @@
-
 import './App.css';
-import UserComponent from './UserComponent';
+import React from "react";
+import {Link} from "react-router-dom"
+
 
 function App() {
   return (
-    <div>
 
-      <UserComponent/>
-      
-    </div>
-  );
+        <div>
+            <button>
+                <Link to="/signup">Sign Up</Link>
+            </button>
+            <button>
+                <Link to="/signin">Sign In</Link>
+            </button>
+        </div>
+    );
 }
 
 export default App;
