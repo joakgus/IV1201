@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import {UserGetter} from "../model/UserGetter";
 
 class UserSignIn extends Component {
 
@@ -8,11 +9,12 @@ class UserSignIn extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            email:''
+            email:'',
+            password:''
         }
 
         this.changeEmailHandler=this.changeEmailHandler.bind(this);
-        this.saveUser = this.saveUser.bind(this);
+        this.login = this.login.bind(this);
     }
 
     //return metadata from target input fields and their values
@@ -21,34 +23,44 @@ class UserSignIn extends Component {
         this.setState({email: event.target.value})
     }
 
+    changePasswordHandler =(event)=> {
+        this.setState({password: event.target.value})
+    }
+
     //save the input values
-    saveUser=(e)=>{
+    login=(e)=>{
         e.preventDefault();
-        let user ={email: this.state.email};
-        console.log('User=>' + JSON.stringify(user));
+
+        this.setState(this.props.userModel.getUser(this.state.email, this.state.password))
+
+        //let user ={email: this.state.email, password: this.state.password};
+        //console.log('User=>' + JSON.stringify(user));
     }
 
 
     //return react elements to the browser
     render(){
-        return(
-
-            <form onSubmit={this.saveUser}>
-
+        if (this.props.userModel.user.personalNumber == null) {
+            return (
                 <div>
                     <div className="container">
                         <div className="row">
                             <br></br>
-                            <h1 className="text-center">User Registration</h1>
+                            <h1 className="text-center">User Sign In {this.props.userModel.user.firstName}</h1>
                             <br></br>
                             <div className=" card col-md-6 offset-md-3">
                                 <div className="card-body">
-                                    <form>
+                                    <form onSubmit={this.login}>
 
                                         <div className="form-group">
                                             <label>email</label>
                                             <input placeholder="Email" name="email" className="form-control"
                                                    value={this.state.email} onChange={this.changeEmailHandler}/>
+                                        </div>
+                                        <div className="form-group">
+                                            <label>password</label>
+                                            <input placeholder="password" name="password" className="form-control"
+                                                   value={this.state.password} onChange={this.changePasswordHandler}/>
                                         </div>
                                         <br></br>
                                         <br></br>
@@ -60,8 +72,12 @@ class UserSignIn extends Component {
                         </div>
                     </div>
                 </div>
-            </form>
-        )
+            )
+        }
+        else
+        {
+            return(<p>hi</p>)
+        }
     }
 }
 

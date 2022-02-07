@@ -8,9 +8,8 @@ class UserSignUp extends Component{
     constructor(props){
         super(props)
         this.state={
-
-        firstName:'',
-        lastName:'',
+            firstName:'',
+            lastName:'',
             personalNumber:'',
             email:'',
             password:''
@@ -49,6 +48,7 @@ class UserSignUp extends Component{
     saveUser=(e)=>{
         e.preventDefault();
         let user ={firstName: this.state.firstName,lastName:this.state.lastName,personalNumber:this.state.personalNumber, email: this.state.email, password: this.state.password};
+        this.props.createUser(user)
         console.log('User=>' + JSON.stringify(user));
     }
 
